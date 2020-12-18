@@ -14,7 +14,7 @@ from models.user import User
 from os import getenv
 
 
-classes = {'State': State, 'City': City, 'User': User}
+classes = {'State': State, 'City': City}
 
 
 class DBStorage:
