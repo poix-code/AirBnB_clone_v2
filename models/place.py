@@ -20,3 +20,20 @@ class Place(BaseModel, Base):
     price_by_night = Column(Integer, default=0, nullable=False)
     latitude = Column(Float)
     longitude = Column(Float)
+
+    if getenv('HBNB_TYPE_STORAGE') == 'db':
+        reviews = relationship("Review",
+                               backref="place",
+                               cascade="all, delete, delete-orphan")
+
+    else:
+        @property
+        def amenities(self):
+            """returns the list of City instances with state_id equals
+            to the current State.id"""
+            obj = models.storage.all(Amenity)
+            ls = []
+            for amenity in obj.values():
+                if amenity.place_id == self.id:
+                    ls.append(amenity)
+            return ls
