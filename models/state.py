@@ -1,11 +1,13 @@
 #!/usr/bin/python3
 """ State Module for HBNB project """
-from models.base_model import BaseModel
-from models.base_model import Base
-from sqlalchemy import Column, Integer, String, ForeignKey
+from models.base_model import BaseModel, Base
+from sqlalchemy import Column, Integer, String, ForeignKey, DateTime
+from sqlalchemy.ext.declarative import declarative_base
+from models.engine.file_storage import FileStorage
 from os import getenv
 from sqlalchemy.orm import relationship
 import models
+from models.city import City
 
 
 class State(BaseModel, Base):
@@ -28,3 +30,7 @@ class State(BaseModel, Base):
                 if city.state_id == self.id:
                     data.append(city)
             return data
+
+    def __init__(self, *args, **kwargs):
+        """calling state init"""
+        super().__init__(*args, **kwargs)
